@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+:root {
+    --primary: #0066ff;
+    --dark: #1d1d1f;
+    --text-muted: #6e6e73;
+    --bg: #ffffff;
+    --card-bg: #f5f5f7;
+    --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    background: var(--bg); 
+    color: var(--dark); 
+    overflow-x: hidden;
+}
+
+/* --- Animasyon Tanımları --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes navBlur {
+    from { backdrop-filter: blur(0px); background: rgba(255,255,255,0); }
+    to { backdrop-filter: blur(20px); background: rgba(255,255,255,0.85); }
+}
+
+/* --- Navigasyon --- */
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 8%; height: 80px; position: fixed; width: 100%; top: 0;
+    z-index: 1000;
+    animation: navBlur 1s forwards;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo { 
+    font-size: 1.5rem; font-weight: 800; color: var(--dark); text-decoration: none;
+    animation: slideInRight 0.8s ease;
+}
+
+.nav-links { display: flex; list-style: none; gap: 35px; }
+.nav-links a { 
+    text-decoration: none; color: var(--dark); font-size: 0.95rem; font-weight: 600; 
+    opacity: 0.7; transition: var(--transition);
+}
+.nav-links a:hover { opacity: 1; color: var(--primary); transform: translateY(-2px); }
+
+/* --- Section & İçerik --- */
+section { 
+    padding: 160px 8% 80px; 
+    min-height: 100vh;
+    animation: fadeInUp 1s ease-out; /* Sayfa açılış animasyonu */
+}
+
+.header-box h1, .header-box h2 { 
+    font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 20px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.header-box p { 
+    font-size: 1.25rem; color: var(--text-muted); 
+    animation: fadeInUp 1s ease-out;
+}
+
+/* --- Kartlar (Hover Efektli) --- */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+.card { 
+    background: var(--card-bg); padding: 50px; border-radius: 32px; 
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.card:hover { 
+    transform: translateY(-15px) scale(1.02); 
+    background: #ffffff;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+    border-color: var(--primary);
+}
+
+/* --- Butonlar --- */
+.btn-main {
+    display: inline-block;
+    background: var(--dark); color: white; padding: 18px 45px; 
+    border-radius: 50px; text-decoration: none; font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.btn-main:hover {
+    background: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 102, 255, 0.3);
+}
+
+/* --- İletişim Formu --- */
+input, textarea { 
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+input:focus, textarea:focus { 
+    background: white;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1);
+}
+
+/* --- Footer --- */
+footer { 
+    padding: 80px 8%; text-align: center; 
+    background: #fafafa; border-top: 1px solid #eee;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.5s forwards; /* Gecikmeli belirme */
+}

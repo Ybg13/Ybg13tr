@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim | YBG13™</title>
+    <link rel="stylesheet" href="style.css"><link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="description" content="YBG13™ - İleri düzey yazılım mimarileri ve dijital dönüşüm çözümleri sunan teknoloji laboratuvarı.">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">YBG13™</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="hizmetler.html">Hizmetler</a></li>
+            <li><a href="kurucular.html">Kurucular</a></li>
+            <li><a href="projeler.html">Projeler</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <div class="header-box">
+            <h2>Bize Ulaşın</h2>
+            <p>Projelerinizi hayata geçirmek için sabırsızlanıyoruz. Doğrudan mail atabilir veya formu doldurabilirsiniz.</p>
+            <br>
+            <p>E-posta: <a href="mailto:berkbey187@gmail.com" style="color:var(--primary); font-weight:800; text-decoration:none;">berkbey187@gmail.com</a></p>
+        </div>
+
+        <div class="contact-wrapper" style="max-width: 600px; margin: 0 auto;">
+            <form id="contact-form" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" id="name" placeholder="Adınız ve Soyadınız" required 
+                       style="width: 100%; padding: 18px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.1); background: #f5f5f7; font-size: 1rem;">
+                
+                <input type="email" id="email" placeholder="E-posta Adresiniz" required 
+                       style="width: 100%; padding: 18px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.1); background: #f5f5f7; font-size: 1rem;">
+                
+                <textarea id="message" placeholder="Projeniz veya mesajınız hakkında kısa bir bilgi..." rows="6" required 
+                          style="width: 100%; padding: 18px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.1); background: #f5f5f7; font-size: 1rem; font-family: inherit; resize: none;"></textarea>
+                
+                <button type="submit" id="submit-btn" 
+                        style="background: var(--dark); color: white; padding: 20px; border-radius: 16px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem;">
+                    Mesajı Gönder
+                </button>
+            </form>
+            <p id="status" style="text-align: center; margin-top: 20px; font-weight: 600; color: var(--primary);"></p>
+        </div>
+    </section>
+
+  <footer>
+        <div class="footer-content">
+            <span class="footer-logo">YBG13™</span>
+            <p>Geleceğin teknolojilerini bugünden inşa ediyoruz.</p>
+            <div class="footer-links">
+                <a href="index.html">Ana Sayfa</a> | 
+                <a href="gizlilik.html">Gizlilik Politikası</a> | 
+                <a href="sartlar.html">Kullanım Şartları</a> | 
+                <a href="iletisim.html">İletişim</a>
+            </div>
+            <div class="footer-bottom" style="margin-top:20px; opacity:0.5;">
+                &copy; 2026 YBG13™. Tüm Hakları Saklıdır.
+            </div>
+        </div>
+    </footer>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = { 
+            apiKey: "AIzaSyBzB59QQDTDZmf4AoRCrqPoxPIDDm7w_oM", 
+            authDomain: "ybg13lab.firebaseapp.com", 
+            projectId: "ybg13lab", 
+            storageBucket: "ybg13lab.firebasestorage.app", 
+            messagingSenderId: "735845573440", 
+            appId: "1:735845573440:web:8daab4b3727cc78fdc90a5" 
+        };
+
+        const app = initializeApp(firebaseConfig); 
+        const db = getFirestore(app);
+
+        const form = document.getElementById('contact-form');
+        const status = document.getElementById('status');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            btn.innerText = "Gönderiliyor...";
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "messages"), { 
+                    name: document.getElementById('name').value, 
+                    email: document.getElementById('email').value,
+                    message: document.getElementById('message').value, 
+                    date: new Date() 
+                });
+                status.innerText = "Teşekkürler! Mesajınız başarıyla iletildi.";
+                form.reset();
+            } catch (hata) { 
+                status.innerText = "Bir hata oluştu, lütfen tekrar deneyin.";
+                console.error(hata);
+            } finally {
+                btn.innerText = "Mesajı Gönder";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
